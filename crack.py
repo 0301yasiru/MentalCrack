@@ -1,7 +1,9 @@
 # create a program to port forward
 
+from termcolor import colored
 from itertools import chain, combinations, product
 from functools import partial
+from datetime import datetime
 
 indexes = [i for i in range(20)]
 
@@ -15,6 +17,11 @@ char_ch = {
         'L' : ['l', '!', 'i', '1'],
         'I' : ['i', '!', 'l', '1'],
     }
+
+def print_logo(location = 'logo.txt'):
+    with open(location, 'r') as logo:
+        for line in logo.readlines():
+            print(line)
 
 def powerset(set_):
     s = list(set_)
@@ -91,6 +98,7 @@ def get_list_combinations(a,b,joiners, sufficses):
             huge_data.extend(list(map(lambda string : string + suffix, data)))
     return huge_data
             
+print_logo()
 
 keys      = input("Enter Keywords about the target -> ").replace(' ', '').split(',')
 joiners   = [''] + input("Enter joinerds between keys     -> ").replace(' ', '').split(',')
@@ -98,6 +106,8 @@ sufficses = [''] + input("Enter possible suffixes         -> ").replace(' ', '')
 
 # generate all lists for keywords
 counter = 0
+start_time = datetime.now()
+print('[+] Paswords are generating!!')
 
 with open('wordlist.txt', 'w') as output:
     lists = []
@@ -120,6 +130,8 @@ with open('wordlist.txt', 'w') as output:
         output.write('\n'.join(str_))
         output.write('\n')
 
-print('Password count -> {}'.format(counter))
+print('[+] Done password generating')
+print('[*] Time Took     -> {} secs'.format((datetime.now() - start_time).seconds))
+print('[*]Password count -> {}'.format(counter))
 
 #keys = input().strip().replace(" ", '').split(',')
